@@ -3,27 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./src/style.css" />
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo Project</title>
 </head>
 <body>
     <script src="main.js"></script>
     <div class="main-container" id="main-container">
+        <!-- header -->
         <div class="header" id="header">
-            ToDo
+            <p class="header-text" id="header-text">ToDo</p>
         </div>
+        <!-- body -->
         <div class="body-container" id="body-container">
-            <div class="nav-container" id="nav-container">
+            <!-- Sidebar -->
+            <div class="side-bar" id="side-bar">
+                <!-- button container -->
+                <div class="menu-container" id="menu-container">
+                    <div class="menu" id="menu">
+                        <button type="button">All</button>
+                    </div>
+                    <div class="menu" id="menu">
+                        <button type="button">Today</button>
+                    </div>
+                    <div class="menu" id="menu">
+                        <button type="button">Week</button>
+                    </div>
+                    <div class="menu" id="menu">
+                        <button type="button">Important</button>
+                    </div>
+                    <div class="menu" id="menu">
+                        <button type="button">Completed</button>
+                    </div>
+                </div>
+                <!-- project ccontainer -->
+                <div class="project-container" id="project-container">
+                    <!-- Project List -->
+                    <div class="projects-title">
+                        <p>Projects (<span class="projects-count"></span>)</p>
+                        <i class="fi fi-rr-add">
+                            <span class="add-project tooltip-text">Add New Project</span>
+                        </i>
+                    </div>
+                    <div class="project-list">
 
+                    </div>
+
+                </div>
+                
             </div>
+            <!-- Task content -->
             <div class="content" id="content">
+                <!-- Menu title header -->
+                <div class="title-container" id="title-container">
+                    <i class="title-icon" id="title-icon">icon</i>
+                    <h1 class="titile-text" id="titile-text">TEST</h1>
+                </div>
 
+                <div class="tasks-container">
+                    <!-- task title -->
+                    <div class="task-title-container">
+                        <div class="tasks-title-text">
+                          <p>Tasks (<span class="tasks-count"></span>)</p>
+                        </div>
+                        <i class="fi fi-rr-add">
+                          <span class="add-task tooltip-text">Add New Task</span>
+                        </i>
+                      </div>
+                    <!-- TASKS LIST -->
+                    <div class="tasks-list">
+                        <!-- Tasks here -->
+                    </div>
+
+                </div>
+                
             </div>
 
         </div>
 
 
     </div>
+    <!-- Project Modal -->
+    <div class="modal hide" id="modal">
+        <div class="modal-container">
+            <!-- Modal Header -->
+            <div class="modal-header" id="modal-header">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <i class="fi fi-rr-add"></i>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-content">
+                <!-- deletion -->
+                <p class="project-deletion-text hide">Are you sure?<br><br>
+                    Project <span class="project-deletion-title"></span> will be gone forever!
+                </p>
+                <p class="task-deletion-text hide">Are you sure?<br><br>
+                    Task <span class="task-deletion-title"></span> will be gone forever!
+                </p>
+
+                <!-- Task content -->
+                <div class="info hide">
+                     <!-- TITLE -->
+                    <div class="task-title-div">
+                        <p class="info-title padding-right">Title:</p>
+                        <p class="info-task-title"></p>
+                    </div>
+
+                    <!-- DESCRIPTION -->
+                    <div class="task-description-div">
+                        <p class="info-description padding-right">Description:</p>
+                        <p class="info-task-description"></p>
+                    </div>
+
+                    <!-- DUE DATE -->
+                    <div class="task-due-date-div">
+                        <p class="info-due-date padding-right">Due date:</p>
+                        <p class="info-task-due-date"></p>
+                    </div>
+
+                    <!-- PRIORITY -->
+                    <div class="task-priority-div">
+                        <p class="info-priority padding-right">Priority:</p>
+                        <p class="info-task-priority"></p>
+                    </div>
+
+                    <!-- PROJECT -->
+                    <div class="task-project-div">
+                        <p class="info-project padding-right">Project:</p>
+                        <p class="info-task-project"></p>
+                    </div>
+
+                </div>
+
+                <form id="form" name="form" method="POST">
+                    <!-- MODAL TITLE INPUT -->
+                    <div>
+                        <label id="modal-title-label" for="modal-title">Title<span class="title-star">*</span></label>
+                        <input type="text" id="modal-title" name="modal-title" autocomplete="off">
+                        <p class="modal-title-error hide">Please fill out this field.</p>
+                    </div>
+
+                    <!-- MODAL CONTENT FOR A TASK -->
+                    <div class="modal-tasks-div hide">
+
+                        <!-- TASK DESCRIPTION -->
+                        <div class="task-description-area">
+                        <label for="task-description">Description</label>
+                        <textarea class="task-description" rows="3" cols="36"></textarea>
+                        </div>
+
+                        <!-- TASK DUE DATE -->
+                        <div class="task-due-date">
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" id="dueDate" name="dueDate">
+                        </div>
+
+                        <!-- TASK PRIORITY -->
+                        <div>
+                        <label for="priority">Priority</label>
+                        <select class="task-priority" name="priority">
+                            <option value="" disabled selected>How important is this task?</option>
+                            <option value="low">😴 Not important at all..</option>
+                            <option value="medium">😅 A bit important</option>
+                            <option value="high">😲 Super important!</option>
+                        </select>
+                        </div>
+
+                    </div>
+                </form>
+                
+                <!-- MODAL BUTTONS -->
+                <div class="modal-buttons">
+                    <button type="button" class="cancel-modal close">Cancel</button>
+                    <button type="button" class="modal-task-button confirm-modal"></button>
+                </div>
+
+
+            </div>
+            
+
+        </div>
+
+    </div>
+
+    
 
 </body>
 </html>
