@@ -1,8 +1,10 @@
+:root{
+    --pink: rgb(255, 230, 234);
+}
+
 *{
-    background-color: rgb(255, 230, 234);
     font-family: 'Quicksand', sans-serif;
     font-size: 1rem;
-
 }
 
 .header{
@@ -10,6 +12,12 @@
     height: 50px;
     font-size: 1.5rem;
     font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    align-items: center;
+    padding-left: 15px;
+    background-color: var(--pink);
 
 }
 

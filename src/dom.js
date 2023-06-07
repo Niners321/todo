@@ -17,6 +17,32 @@ const dom = (() => {
     const formTaskTitleError = document.querySelector('.task-title-error');
     const formTaskProjectError = document.querySelector('.task-project-error');
 
+
+    function responsiveSidebar() {
+        if (window.innerWidth <= 960) {
+          sidebar.classList.remove('sidebar-show');
+          sidebar.classList.add('sidebar-hide');
+          main.classList.add('main-mobile');
+        } else {
+          sidebar.classList.remove('sidebar-hide');
+          sidebar.classList.add('sidebar-show');
+          main.classList.remove('main-mobile', 'main-blur');
+        }
+      }
+    
+      function toggleSidebar() {
+        if (!sidebar.classList.contains('sidebar-show')) {
+          sidebar.classList.remove('sidebar-hide');
+          sidebar.classList.add('sidebar-show');
+          main.classList.add('main-blur');
+        } else if (sidebar.classList.contains('sidebar-show')) {
+          sidebar.classList.remove('sidebar-show');
+          sidebar.classList.add('sidebar-hide');
+          main.classList.remove('main-blur');
+        }
+      }
+
+
     function showProjectModal(modal, index = false) {
         const modalHeading = document.querySelector('.project-modal-title');
         const modalSubmitButton = document.querySelector('#project-button');
