@@ -268,7 +268,167 @@ const dom = (() => {
     }
 
     function renderTasks(projectIndex) {
-        
+        let indexStart;
+        let indexEnd;
+        const currDate = format(new Date(), 'yyyy-MM-dd');
+
+        tasksList.textContent = '';
+        if (projects.projectsList.length >= 1) {
+            if (typeof projectIndex === 'number') {
+                indexStart = projectIndex;
+                indexEnd = projectIndex + 1;
+            } else {
+                indexStart = 0;
+                indexEnd = projects.projectsList.length;
+            }
+            for (let j = indexStart; j < indexEnd; j++) {
+                for (let i= 0; i < projects.projectsList[j].tasks.length; i++) {
+                    if (
+                        projectIndex === 'today' &&
+                        projects.projectsList[j].tasks[i].schedule !== currDate
+                    ) {
+                        continue;
+                    } else if (
+                        projectIndex === 'week' &&
+                        !(
+                            differenceInDays(
+                            parseISO(projects.projectsList[j].tasks[i].schedule),
+                            parseISO(currDate)
+                        ) >= 0 &&
+                        differenceInDays(
+                            parseISO(projects.projectsList[j].tasks[i].schedule),
+                            parseISO(currDate)
+                        ) <= 7
+                    )
+                ) {
+                    continue;
+                } else if (
+                    projectIndex === 'important' &&
+                    projects.projectsList[j].tasks[i].done !== true
+                ) {
+                    continue;
+                } else if (
+                    projectIndex === 'completed' &&
+                    projects.projectsList[j].tasks[i].done !== true
+                ) {
+                    continue;
+                }
+
+                const todoItem = document.createElement('div');
+                todoItem.classList.add('todo-item', 'toggle-task');
+                todoItem.setAttribute('data-project-index', j);
+                todoItem.setAttribute('data-task-index', i);
+                tasksList.appendChild(todoItem);
+                // Create icon
+                const taskIcon = document.createElement('i');
+                taskIcon.classList.add('fi', 'toggle-task');
+                todoItem.appendChild(taskIcon);
+                // create title
+                const taskTitle = document.createElement('p');
+                taskTitle.classList.add('todo-item-title', 'toggle-task');
+                taskTitle.textContent = projects.projectsList[j].tasks[i].title;
+                if (projects.projectsList[j].tasks[i].done === true) {
+                    taskIcon.classList.add('fa-check-circle');
+                    taskTitle.classList.add('done');
+                } else {
+                    taskIcon.classList.add('fa-circle');
+                    taskTitle.classList.remove('done');
+                }
+                todoItem.appendChild(taskTitle);
+                // create date
+                if (projects.projectsList[j].tasks[i].schedule !== '') {
+                    const taskDate = document.createElement('p');
+                    taskDate.classList.add(
+                        'todo-item-date',
+                        'todo-item-pill',
+                        'toggle-task'
+                    );
+                    taskDate.textContent = projects.projectsList[j].tasks[i].schedule;
+                    todoItem.appendChild(taskDate);
+                }
+                //create project name
+                const taskProject = document.createElement('p');
+                taskProject.classList.add(
+                    'todo-item-pill',
+                    'toggle-task',
+                    'todo-item-project-name'
+                );
+                taskProject.textContent = projects.projectsList[j].title;
+                todoItem.appendChild(taskProject);
+                //create edit icon
+                const taskEditIcon = document.createElement('i');
+                taskEditIcon.clcassList.add(
+                    'fi',
+                    'fi-rr-edit',
+                    'edit-task-modal'
+                );
+                todoItem.appendChild(taskEditIcon);
+                //create remove icon
+                const taskRemoveIcon = document.createElement('i');
+                taskRemoveIcon.classList.add(
+                    'fi',
+                    'fi-rs-trash', 
+                    'remove-project-modal'
+                );
+                todoItem.appendChild(taskRemoveIcon);
+                }
+            }  
+            // Add task line
+            const taskAdd = document.createElement('div');
+            taskAdd.setAttribute('data-project-index', projectIndex);
+            taskAdd.classList.add('todo-item-add', 'add-task-modal');
+            tasksList.appendChild(taskAdd);
+            const taskAddIcon = document.createElement('i');
+            taskAddIcon.classList.add('far', 'fa-plus', 'fa-fw', 'add-task-modal');
+            taskAdd.appendChild(taskAddIcon);
+            const taskAddTitle = document.createElement('p');
+            taskAddTitle.classList.add('todo-item-title', 'add-task-modal');
+            taskAddTitle.textContent = 'Add new task';
+            taskAdd.appendChild(taskAddTitle);
+        } else {
+            // No project warning
+            const taskAdd = document.createElement('div');
+            taskAdd.classList.add('todo-item-add', 'add-project-modal');
+            tasksList.appendChild(taskAdd);
+            const taskAddIcon = document.createElement('i');
+            taskAddIcon.classList.add(
+                'fi',
+                'fi-rs-exclamation',
+                'add-project-modal'
+            );
+            taskAdd.appendChild(taskAddIcon);
+            const taskAddTitle = document.createElement('p');
+            taskAddTitle.classList.add('todo-item-title', 'add-project-modal');
+            taskAddTitle.textContent = "You don't have any projects, create one.";
+            taskAdd.appendChild(taskAddTitle);
+        }
     }
 
-})
+    function changeLink(projectIndex) {
+        selectLink(projectIndex);
+        renderHeader(projectIndex);
+        renderTasks(projectIndex);
+    }
+
+    return {
+        body,
+        projectModal,
+        confirmModal,
+        modals,
+        formProjectTitleError,
+        formTaskTitleError,
+        formTaskProjectError,
+        responsiveSidebar,
+        toggleSidebar,
+        showProjectModal,
+        showTaskModal,
+        showConfirmModal,
+        showElement,
+        hideElement,
+        renderProjects,
+        renderTasks,
+        changeLink,
+    };
+})();
+
+export default dom;
